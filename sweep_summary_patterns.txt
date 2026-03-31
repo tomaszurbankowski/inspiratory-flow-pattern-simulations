@@ -1,0 +1,14 @@
+Total rows: 66978
+Waveforms: decelerating, sinusoidal, square
+Ti values (s): [np.float64(0.6), np.float64(1.0), np.float64(1.5)]
+Pause fractions: [np.float64(0.0), np.float64(0.2)]
+Grid points per scenario: 61x61 = 3721
+Scenarios: 18
+Matched pairs within ±5% MPtotal: 178773640
+Unique rows involved in MP-matched comparisons: 66978
+Maximum ΔPI within ±5% MPtotal: 0.501032
+PI range: 0.130493 to 0.801572
+EII range: 0.000000 to 0.739014
+MPtotal range (J/min): 1.745860 to 13.549944
+Check max residual (max over sweep): 2.998e-15 L/s
+Check max Paw inconsistency (max over sweep): 3.553e-15 cmH2O
