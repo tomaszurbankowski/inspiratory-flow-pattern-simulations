@@ -1,0 +1,33 @@
+MECHANICAL-POWER MATCHING SENSITIVITY ANALYSIS
+Mode: all_pairs
+Matching definition: Delta MP_rel = 2*|MP_a-MP_b|/(MP_a+MP_b)
+Each unordered pair of distinct simulations was counted once.
+Distributional summaries are descriptive.
+
+Tolerance: 1%
+  Matched pairs: 36,763,161
+  |Delta PI| median (IQR): 0.071812 (0.031116-0.127807)
+  |Delta PI| p95 / max: 0.238993 / 0.487543
+  |Delta EII| median (IQR): 0.100669 (0.042826-0.190454)
+  |Delta EII| p95 / max: 0.384083 / 0.736545
+
+Tolerance: 2.5%
+  Matched pairs: 91,847,630
+  |Delta PI| median (IQR): 0.071811 (0.031188-0.127923)
+  |Delta PI| p95 / max: 0.239102 / 0.496063
+  |Delta EII| median (IQR): 0.101048 (0.043279-0.190607)
+  |Delta EII| p95 / max: 0.384229 / 0.739014
+
+Tolerance: 5%
+  Matched pairs: 183,216,010
+  |Delta PI| median (IQR): 0.071985 (0.031886-0.128324)
+  |Delta PI| p95 / max: 0.239589 / 0.501032
+  |Delta EII| median (IQR): 0.102137 (0.044724-0.190796)
+  |Delta EII| p95 / max: 0.384709 / 0.739014
+
+Tolerance: 10%
+  Matched pairs: 363,704,299
+  |Delta PI| median (IQR): 0.072840 (0.033870-0.129950)
+  |Delta PI| p95 / max: 0.241415 / 0.519402
+  |Delta EII| median (IQR): 0.104272 (0.046915-0.191827)
+  |Delta EII| p95 / max: 0.385863 / 0.739014
