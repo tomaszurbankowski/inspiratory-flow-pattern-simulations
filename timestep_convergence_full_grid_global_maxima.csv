@@ -1,7 +1,0 @@
-comparison,metric,maximum,waveform,Ti_s,pause_fraction,C2_over_C1,R2_over_R1
-1ms_to_0p5ms,EII,0.0008775648768238886,decelerating,0.6,0.2,0.25,0.25
-1ms_to_0p5ms,MP_rel,0.002654527107023333,decelerating,0.6,0.2,0.75,0.25
-1ms_to_0p5ms,PI,0.00043878243841191655,decelerating,0.6,0.2,0.25,0.25
-1ms_vs_0p125ms,EII,0.0015322670341415545,decelerating,0.6,0.2,0.25,0.25
-1ms_vs_0p125ms,MP_rel,0.0046387837777464675,decelerating,0.6,0.2,0.75,0.25
-1ms_vs_0p125ms,PI,0.0007661335170707773,decelerating,0.6,0.2,0.25,0.25
