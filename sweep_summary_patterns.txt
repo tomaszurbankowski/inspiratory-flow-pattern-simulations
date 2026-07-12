@@ -1,0 +1,12 @@
+Total rows: 66978
+Waveforms: decelerating, sinusoidal, square
+Ti values (s): 0.6, 1, 1.5
+Pause fractions: 0, 0.2
+Grid points per scenario: 61x61 = 3721
+Scenarios: 18
+PI range: 0.130493 to 0.801572
+EII range: 0.000000 to 0.739014
+MPtotal range (J/min): 1.745860 to 13.549944
+Mechanical-power matching sensitivity: run run_mp_matching_sensitivity.py on the generated CSV.
+Check max residual (max over sweep): 2.998e-15 L/s
+Check max Paw inconsistency (max over sweep): 3.553e-15 cmH2O
