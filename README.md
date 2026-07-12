@@ -1,6 +1,6 @@
 # inspiratory-flow-pattern-simulations
 
-This repository contains the simulation code, parameter-sweep outputs, numerical-verification results, and figure-generation scripts associated with the manuscript:
+This repository contains the simulation code, parameter-sweep outputs, numerical-verification results, mechanical-power matching sensitivity analysis, and figure-generation scripts associated with the manuscript:
 
 **“Effects of Inspiratory Waveform, Inspiratory Time, and Pause on Compartmental Energy Routing in a Heterogeneous Two-Compartment Respiratory Model.”**
 
@@ -18,13 +18,34 @@ The two compartments are abstract lumped model branches rather than anatomical l
   Core two-compartment parallel linear resistance–compliance model under volume-controlled ventilation, with configurable inspiratory waveform and optional end-inspiratory pause.
 
 - `run_sweep_v3_pattern.py`  
-  Parameter-sweep script used to generate the main simulation dataset across waveform, inspiratory time, pause fraction, and mechanical heterogeneity conditions.
+  Parameter-sweep script used to generate the main simulation dataset across waveform, inspiratory time, pause fraction, and mechanical heterogeneity conditions. Mechanical-power matching is performed separately by `run_mp_matching_sensitivity.py`.
 
 - `sweep_PI_MP_patterns.csv`  
   Main parameter-sweep output dataset containing PI, EII, compartment-specific energies, global mechanical power, and numerical-consistency metrics.
 
 - `sweep_summary_patterns.txt`  
   Summary statistics for the main parameter sweep.
+
+### Mechanical-power matching sensitivity analysis
+
+- `run_mp_matching_sensitivity.py`  
+  Pairwise sensitivity analysis using the symmetric relative difference in global mechanical power:
+
+  ```text
+  ΔMP_rel(a,b) = 2 × |MP_a − MP_b| / (MP_a + MP_b)
+  ```
+
+  All possible unordered pairs of distinct simulations are evaluated, with each pair counted once. The manuscript analysis uses matching tolerances of 1%, 2.5%, 5%, and 10%. For each tolerance, the script reports the number of matched pairs and the median, interquartile range, 95th percentile, and maximum of the absolute between-pair differences in PI and EII.
+
+- `mp_matching_sensitivity_summary.csv`  
+  Machine-readable results of the mechanical-power matching sensitivity analysis. This file provides the numerical basis for Supplementary Table S2.
+
+- `mp_matching_sensitivity_summary.txt`  
+  Human-readable summary of the same analysis.
+
+The parameter sweep is deterministic, and individual simulations may contribute to multiple matched pairs. The pair counts and distributional summaries are therefore descriptive and should not be interpreted as numbers of statistically independent observations.
+
+By default, `run_mp_matching_sensitivity.py` uses the `all_pairs` mode reported in the manuscript. An optional `different_temporal_scenario` mode excludes pairs with the same waveform, inspiratory time, and pause fraction; this optional mode is not used for the manuscript results.
 
 ### Numerical verification
 
@@ -117,9 +138,9 @@ The following algebraic consistency metrics are monitored:
 
 - maximum inspiratory flow-balance residual:
 
-```text
-|F1 + F2 − Ftot|
-```
+  ```text
+  |F1 + F2 − Ftot|
+  ```
 
 - maximum discrepancy between the common airway-opening pressure and the pressure reconstructed independently from each compartment.
 
@@ -181,8 +202,20 @@ The main dataset contains 66,978 simulations. The resulting ranges are:
 
 - PI: `0.130493` to `0.801572`;
 - EII: `0.000000` to `0.739014`;
-- global mechanical power: `1.745860` to `13.549944 J/min`;
-- maximum PI difference among conditions matched within ±5% global mechanical power: `0.501032`.
+- global mechanical power: `1.745860` to `13.549944 J/min`.
+
+## Mechanical-power matching results
+
+Using the symmetric relative mechanical-power difference and all unordered pairs of distinct simulations, the sensitivity analysis produced:
+
+| Matching tolerance | Matched pairs | Median \|ΔPI\| (IQR) | 95th percentile \|ΔPI\| | Maximum \|ΔPI\| | Median \|ΔEII\| (IQR) | 95th percentile \|ΔEII\| | Maximum \|ΔEII\| |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1% | 36,763,161 | 0.072 (0.031–0.128) | 0.239 | 0.488 | 0.101 (0.043–0.190) | 0.384 | 0.737 |
+| 2.5% | 91,847,630 | 0.072 (0.031–0.128) | 0.239 | 0.496 | 0.101 (0.043–0.191) | 0.384 | 0.739 |
+| 5% | 183,216,010 | 0.072 (0.032–0.128) | 0.240 | 0.501 | 0.102 (0.045–0.191) | 0.385 | 0.739 |
+| 10% | 363,704,299 | 0.073 (0.034–0.130) | 0.241 | 0.519 | 0.104 (0.047–0.192) | 0.386 | 0.739 |
+
+The pair counts and maxima are calculated exactly. Quantiles are accumulated using a fixed histogram resolution of `1 × 10^-6` by default, which is substantially finer than the three-decimal reporting precision used in the manuscript.
 
 ## Requirements
 
@@ -219,6 +252,31 @@ Alternative output paths and simulation settings can be specified using command-
 ```bash
 python run_sweep_v3_pattern.py --help
 ```
+
+## Running the mechanical-power matching sensitivity analysis
+
+After generating or downloading `sweep_PI_MP_patterns.csv`, run:
+
+```bash
+python run_mp_matching_sensitivity.py \
+  --input-csv sweep_PI_MP_patterns.csv \
+  --mode all_pairs
+```
+
+This generates:
+
+```text
+mp_matching_sensitivity_summary.csv
+mp_matching_sensitivity_summary.txt
+```
+
+The default tolerances are 1%, 2.5%, 5%, and 10%. Available options can be displayed using:
+
+```bash
+python run_mp_matching_sensitivity.py --help
+```
+
+The analysis evaluates hundreds of millions of eligible pairs and may require substantial processing time. Pair counts and maxima are exact; quantiles are estimated at the selected histogram resolution.
 
 ## Running the time-step convergence study
 
